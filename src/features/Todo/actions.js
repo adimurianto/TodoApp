@@ -16,14 +16,14 @@ export function removeTodo(id) {
     }
 }
 
-export function EditTodo(id) {
+export function editTodo(id) {
     return {
         type: EDIT_TODO,
         id
     }
 }
 
-export function UpdateTodo(id, description, status) {
+export function updateTodo(id, description, status) {
     return {
         type: UPDATE_TODO,
         id,

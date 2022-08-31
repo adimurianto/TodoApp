@@ -1,4 +1,4 @@
-import { UpdateTodo } from './action';
+import { UpdateTodo } from './actions';
 import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO} from './constants';
 
 const initialState = [];
@@ -6,7 +6,8 @@ const initialState = [];
 function reducer(state=initialState, action) {
     switch (action.type) {
         case ADD_TODO:
-            const nextId = state.length + 1;
+            const d = new Date();
+            const nextId = d.getTime();
             const newTodo = {id: nextId, description: action.description, status: action.status, created_at: action.created_at};
             return [...state, newTodo];
 
@@ -31,3 +32,5 @@ function reducer(state=initialState, action) {
             return state;
     }
 }
+
+export default reducer;
