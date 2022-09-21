@@ -2,7 +2,7 @@ import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import AddTodoForm from "../AddTodoForm";
-import { removeTodo } from "../../features/Todo/actions";
+import { doneTodo, removeTodo } from "../../features/Todo/actions";
 import './style.css';
 
 export default function Todo() {
@@ -30,20 +30,19 @@ export default function Todo() {
                     return (
                         <div className="list-todo">
                             <div className="deskripsi">
-                                <h4>
-                                    {todo.description}
-                                </h4>
+                                <h4 dangerouslySetInnerHTML={{__html: todo.description}} />
                             </div>
                             <div className="action-opt" >
                                 <button 
-                                    className="btn-done" 
+                                    className={`btn-done ${(todo.status == 'done' ? 'hidden' : '')}`}
                                     aria-label="Done" 
                                     style={{color: 'green'}} 
                                     dangerouslySetInnerHTML={{__html: done}} 
+                                    onClick={_ => dispatch(doneTodo(todo.id))}
                                 />
 
                                 <button 
-                                    className="btn-edit" 
+                                    className={`btn-edit ${(todo.status == 'done' ? 'hidden' : '')}`} 
                                     aria-label="Edit" 
                                     style={{color: 'blue'}} 
                                     dangerouslySetInnerHTML={{__html: edit}} 

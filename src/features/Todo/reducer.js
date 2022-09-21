@@ -1,5 +1,5 @@
 import { UpdateTodo } from './actions';
-import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO} from './constants';
+import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO, DONE_TODO} from './constants';
 
 const initialState = [];
 
@@ -17,6 +17,15 @@ function reducer(state=initialState, action) {
         case EDIT_TODO:
             return state.filter(todo => todo.id == action.id);
 
+        case DONE_TODO:
+            state.map((todo, index) => {
+                if(todo.id == action.id) {
+                    todo.description = `<strike>${todo.description}</strike>`;
+                    todo.status = 'done';
+                }
+            });
+
+            return [...state];
         case UPDATE_TODO:
             const updateTodo = {};
             state.map((todos, index) => {
