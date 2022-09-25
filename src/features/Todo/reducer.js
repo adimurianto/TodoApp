@@ -1,21 +1,45 @@
 import { UpdateTodo } from './actions';
 import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO, DONE_TODO} from './constants';
 
-const initialState = [];
+let initialState = [];
+
+// Set initial state from data local storage todos if exist
+if (localStorage.getItem('todos') !== null) {
+    const StorageTodos = localStorage.getItem('todos');
+    initialState = JSON.parse(StorageTodos);
+
+}
 
 function reducer(state=initialState, action) {
+    let newState;
     switch (action.type) {
         case ADD_TODO:
             const d = new Date();
             const nextId = d.getTime();
             const newTodo = {id: nextId, description: action.description, status: action.status, created_at: action.created_at};
-            return [...state, newTodo];
 
+            newState = [...state, newTodo];
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
+            
         case REMOVE_TODO:
-            return state.filter(todo => todo.id !== action.id);
+            newState = state.filter(todo => todo.id !== action.id);
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
 
         case EDIT_TODO:
-            return state.filter(todo => todo.id == action.id);
+            state.map((todo, index) => {
+                if(todo.id == action.id) {
+                    todo.description = todo.description;
+                }
+            });
+
+            newState = [...state];
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
 
         case DONE_TODO:
             state.map((todo, index) => {
@@ -25,7 +49,11 @@ function reducer(state=initialState, action) {
                 }
             });
 
-            return [...state];
+            newState = [...state];
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
+
         case UPDATE_TODO:
             const updateTodo = {};
             state.map((todos, index) => {
@@ -35,10 +63,16 @@ function reducer(state=initialState, action) {
             });
 
             state.filter(todo => todo.id !== action.id);
-            return [...state, updateTodo];
+            newState = [...state, updateTodo];
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
 
         default:
-            return state;
+            newState = state;
+
+            localStorage.setItem('todos', JSON.stringify(newState));
+            return newState;
     }
 }
 
