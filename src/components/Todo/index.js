@@ -12,11 +12,20 @@ export default function Todo() {
     let dispatch = useDispatch();
 
     const [typeAct, setTypeAct] = React.useState("Add");
+    const [idUpd, setIdUpd] = React.useState("");
+    const [descUpd, setDescUpd] = React.useState("");
+
     const handleChangeTodo = (id, desc) => {
-        console.log('id', id);
-        console.log('desc', desc);
+        setIdUpd(id);
+        setDescUpd(desc);
         setTypeAct("Edit");
     };
+
+    const handleCancelChangeTodo = () => {
+        setIdUpd("");
+        setDescUpd("");
+        setTypeAct("Add");
+    }
 
     const done = "&check;";
     const deleted = "&cross;";
@@ -33,7 +42,7 @@ export default function Todo() {
                     typeAct == 'Add' ? 
                     <AddTodoForm/>
                     :
-                    <EditTodoForm/>
+                    <EditTodoForm desc={descUpd} id={idUpd} cancelChange={handleCancelChangeTodo} />
                 )
             }
 
@@ -45,11 +54,12 @@ export default function Todo() {
                 </center><br/>  
                 {todoList.map((todo, index) => {
                     return (
-                        <div className="list-todo">
+                        <div className="list-todo" key={todo.id}>
                             <div className="deskripsi">
                                 <h4 dangerouslySetInnerHTML={{__html: todo.description}} />
                             </div>
-                            <div className="action-opt" >
+                            
+                            <div className={`action-opt ${(typeAct == 'Edit' ? 'hidden' : '')}`} >
                                 <button 
                                     className={`btn-done ${(todo.status == 'done' ? 'hidden' : '')}`}
                                     aria-label="Done" 
@@ -57,7 +67,7 @@ export default function Todo() {
                                     dangerouslySetInnerHTML={{__html: done}} 
                                     onClick={_ => dispatch(doneTodo(todo.id))}
                                 />
-
+                                
                                 <button 
                                     className={`btn-edit ${(todo.status == 'done' ? 'hidden' : '')}`} 
                                     aria-label="Edit" 

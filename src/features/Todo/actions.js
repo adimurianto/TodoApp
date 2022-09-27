@@ -1,4 +1,4 @@
-import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO, DONE_TODO} from './constants';
+import {ADD_TODO, REMOVE_TODO, UPDATE_TODO, DONE_TODO} from './constants';
 
 export function addTodo(description) {
     return {
@@ -23,18 +23,10 @@ export function doneTodo(id) {
     }
 }
 
-export function editTodo(id) {
-    return {
-        type: EDIT_TODO,
-        id
-    }
-}
-
-export function updateTodo(id, description, status) {
+export function updateTodo(id, description) {
     return {
         type: UPDATE_TODO,
         id,
-        description,
-        status
+        description
     }
 }

@@ -1,5 +1,4 @@
-import { UpdateTodo } from './actions';
-import {ADD_TODO, REMOVE_TODO, EDIT_TODO, UPDATE_TODO, DONE_TODO} from './constants';
+import {ADD_TODO, REMOVE_TODO, UPDATE_TODO, DONE_TODO} from './constants';
 
 let initialState = [];
 
@@ -29,18 +28,6 @@ function reducer(state=initialState, action) {
             localStorage.setItem('todos', JSON.stringify(newState));
             return newState;
 
-        case EDIT_TODO:
-            state.map((todo, index) => {
-                if(todo.id == action.id) {
-                    todo.description = todo.description;
-                }
-            });
-
-            newState = [...state];
-
-            localStorage.setItem('todos', JSON.stringify(newState));
-            return newState;
-
         case DONE_TODO:
             state.map((todo, index) => {
                 if(todo.id == action.id) {
@@ -55,15 +42,13 @@ function reducer(state=initialState, action) {
             return newState;
 
         case UPDATE_TODO:
-            const updateTodo = {};
-            state.map((todos, index) => {
-                if(todos.id == action.id){
-                    updateTodo = {id: action.id, description: action.description, status: action.status};
+            state.map((todo, index) => {
+                if(todo.id == action.id) {
+                    todo.description = action.description;
                 }
             });
 
-            state.filter(todo => todo.id !== action.id);
-            newState = [...state, updateTodo];
+            newState = [...state];
 
             localStorage.setItem('todos', JSON.stringify(newState));
             return newState;

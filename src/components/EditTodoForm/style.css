@@ -6,16 +6,20 @@
 }
 
 .description {
-    width: 65%;
+    width: 60%;
     padding: 0 5px;
 }
 
 .btn_update {
     margin-left: 5%;
-    width: 26%;
+    width: 16%;
+}
+.btn_cancel {
+    margin-left: 2%;
+    width: 13%;
 }
 
-.description, .btn_update {
+.description, .btn_update, .btn_cancel {
     border-radius: 5px;
     height: 2rem;
 }
