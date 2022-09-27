@@ -1,13 +1,22 @@
 import * as React from "react";
+
 import {useSelector, useDispatch} from "react-redux";
 
 import AddTodoForm from "../AddTodoForm";
 import { doneTodo, removeTodo } from "../../features/Todo/actions";
 import './style.css';
+import EditTodoForm from "../EditTodoForm";
 
 export default function Todo() {
     let todoList = useSelector(state => state.todo);
     let dispatch = useDispatch();
+
+    const [typeAct, setTypeAct] = React.useState("Add");
+    const handleChangeTodo = (id, desc) => {
+        console.log('id', id);
+        console.log('desc', desc);
+        setTypeAct("Edit");
+    };
 
     const done = "&check;";
     const deleted = "&cross;";
@@ -18,7 +27,15 @@ export default function Todo() {
             <center>
                 <h2>TODO APP</h2><br/>
             </center>
-            <AddTodoForm/>
+            
+            {
+                (
+                    typeAct == 'Add' ? 
+                    <AddTodoForm/>
+                    :
+                    <EditTodoForm/>
+                )
+            }
 
             <div className="frame-body">
                 <center>
@@ -46,6 +63,7 @@ export default function Todo() {
                                     aria-label="Edit" 
                                     style={{color: 'blue'}} 
                                     dangerouslySetInnerHTML={{__html: edit}} 
+                                    onClick={_ => handleChangeTodo(todo.id, todo.description)}
                                 />
 
                                 <button 

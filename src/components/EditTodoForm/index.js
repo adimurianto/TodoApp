@@ -15,7 +15,7 @@ export default function EditTodoForm() {
     };
 
     const handleEdit = () => {
-        dispatch(editTodo(id, description));
+        // dispatch(editTodo(id, description));
         descRef.current.value = "";
         setDesc("");
     }
